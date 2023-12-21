@@ -44,3 +44,41 @@ function createFigure(works) {
 
 createFigure(works)
 
+
+// Utilisation du filtre Objets pour retourner les travaux avec la catégorie Objets uniquement
+const boutonObjets = document.getElementById("objets");
+
+boutonObjets.addEventListener("click", function () {
+    const worksObjet = works.filter(function (works) {
+        return works.category.id === 1;
+    });
+    createFigure(worksObjet);
+});
+
+// Utilisation du filtre Appartements pour retourner les travaux avec la catégorie Appartements uniquement
+const boutonAppartements = document.getElementById("appartements");
+
+boutonAppartements.addEventListener("click", function () {
+    const worksApparttements = works.filter(function (works) {
+        return works.category.id === 2;
+    });
+    createFigure(worksApparttements);
+});
+
+// Utilisation du filtre Hotels et restaurants pour retourner les travaux avec la catégorie Hotels et restaurants uniquement
+const boutonHotelsetresto = document.getElementById("hotelsetresto");
+
+boutonHotelsetresto.addEventListener("click", function () {
+    const worksHotelsetresto = works.filter(function (works) {
+        return works.category.id === 3;
+    });
+    createFigure(worksHotelsetresto);
+});
+
+// Filtre tous pour reset
+
+const boutonTous = document.getElementById("tous");
+
+boutonTous.addEventListener("click", function () {
+    createFigure(works);
+});

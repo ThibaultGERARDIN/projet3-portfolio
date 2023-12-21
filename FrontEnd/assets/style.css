@@ -32,6 +32,9 @@ body {
 	line-height: 1;
 	background-color: #FFFEF8;
 }
+
+
+
 ol, ul {
 	list-style: none;
 }
@@ -58,6 +61,11 @@ header {
 	display: flex;
 	justify-content: space-between;
 	margin: 50px 0
+}
+
+footer {
+	background-color: white;
+	padding: 10px 0px;
 }
 section {
 	margin: 50px 0
@@ -187,6 +195,14 @@ footer nav ul {
 	margin: 2em
 }
 
+a {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	color:#B1663C;
+}
 
 /* Section filtres */
 
