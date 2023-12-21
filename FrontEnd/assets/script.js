@@ -18,6 +18,7 @@ async function fetchWorks() {
     works = JSON.parse(works)
 }
 
+console.log(works)
 // fonction qui créer les vignettes sur la page d'accueil en fonction des données récupérées sur l'API
 function createFigure(works) {
     // clear the gallery

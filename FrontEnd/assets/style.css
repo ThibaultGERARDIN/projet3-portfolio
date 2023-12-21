@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #FFFEF8;
 }
 ol, ul {
 	list-style: none;
@@ -186,3 +187,35 @@ footer nav ul {
 	margin: 2em
 }
 
+
+/* Section filtres */
+
+.filtres {
+	display : flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	gap : 5px;
+	margin : 40px;
+}
+
+.btn-filtres {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 37px; 
+	padding: 10px;
+	border-radius: 60px;
+	border: solid 1px #1D6154;
+	background-color: #FFFEF8;
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 16px;
+	color: #1D6154;
+	box-sizing: border-box;
+}
+
+.btn-filtres:hover {
+	background-color: #1D6154;
+	color: #FFFEF8;
+}
