@@ -2,9 +2,9 @@
 
 
 
-let works = window.localStorage.getItem('works')
+// let works = window.localStorage.getItem('works')
 
-if (works === null) {
+// if (works === null) {
 async function fetchWorks() {
     // Récupération des pièces depuis l'API
     const reponse = await fetch('http://localhost:5678/api/works');
@@ -12,13 +12,19 @@ async function fetchWorks() {
     // Transformation des works en JSON
     const valeurWorks = JSON.stringify(works);
     // Stockage des informations dans le localStorage
-    window.localStorage.setItem("works", valeurWorks);
+    window.localStorage.setItem('works', valeurWorks);
 }
-} else {
-    works = JSON.parse(works)
-}
+// } else {
+//     works = JSON.parse(works)
+// }
 
-console.log(works)
+fetchWorks()
+
+let works = window.localStorage.getItem('works')
+
+works = JSON.parse(works)
+
+
 // fonction qui créer les vignettes sur la page d'accueil en fonction des données récupérées sur l'API
 function createFigure(works) {
     // clear the gallery
