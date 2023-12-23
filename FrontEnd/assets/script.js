@@ -2,7 +2,7 @@
 
 
 
-let works = window.localStorage.getItem('works');
+let works = window.localStorage.getItem('works')
 
 if (works === null) {
 async function fetchWorks() {
