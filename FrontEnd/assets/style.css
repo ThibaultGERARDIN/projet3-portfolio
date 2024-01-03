@@ -51,12 +51,18 @@ table {
 	border-spacing: 0;
 }
 /** end reset css**/
+
+
 body {
-	max-width: 1140px;
-	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
+
+.main-container {
+	max-width: 1140px;
+	margin:auto;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -200,13 +206,19 @@ footer nav ul {
 	margin: 2em
 }
 
-nav a {
+a {
 	text-decoration: none;
 	color: black;
 }
 
-nav a:hover {
+a:hover {
 	color:#B1663C;
+}
+
+h3 {
+	font-size: 16px;
+	font-weight: 400;
+	font-family: 'Work Sans';
 }
 
 /* Section filtres */
@@ -268,4 +280,84 @@ nav a:hover {
 #login a {
 	color : black;
 	text-decoration: underline;
+}
+
+/* mode edition */
+
+.edition {
+	display: none;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	background-color: black;
+	height: 59px;
+	color: white;
+	gap: 21px;
+}
+
+#logout-link {
+	display : none;
+}
+
+.projets {
+	display : flex;
+	flex-direction: row;
+	gap: 30px;
+	align-items: center;
+	justify-content: center;
+	offset: 30px;
+
+}
+
+#modif {
+	display: none;
+	gap: 5px;
+	margin-bottom: 2em;
+	margin-right: -110px;
+}
+
+/* modale */
+
+::backdrop {
+	background-color: black;
+	opacity: 0.3;
+  }
+  
+dialog {
+	background-color: white;
+	border-radius: 10px;
+	border:none;
+	height: 688px;
+	width: 630px;
+}
+
+#close {
+	display: flex;
+	justify-content: end;
+	font-size: 24px;
+}
+
+.titre-modale {
+	text-align: center;
+	font-size: 26px;
+	font-weight: 400;
+	margin-bottom: 1em;
+}
+
+.mini-gallery {
+	padding: 0px 50px;
+	display: grid;
+	column-gap: 5px;
+	grid-template-columns: repeat(5, 1fr);
+	box-sizing: border-box;
+}
+
+.mini-gallery img {
+	width: 76.86px;
+	height: auto
+}
+
+.btn-trash {
+	position : relative;
+	left : 0px;
 }
