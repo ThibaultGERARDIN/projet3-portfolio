@@ -16,17 +16,14 @@ if (token !== null) {
 
 const logout = document.getElementById('logout-link')
 logout.addEventListener('click', function () {
-    window.localStorage.clear()
-    // recharge la page après le "reset" mais ne fonctionne pas pour le moment ?
-    window.location.reload()
+    // supprime le token du localstorage
+    localStorage.removeItem('token')
+
 })
 
 
+// fonction pour récupérer les travaux sur l'API
 
-
-// let works = window.localStorage.getItem('works')
-
-// if (works === null) {
 async function fetchWorks() {
     // Récupération des pièces depuis l'API
     const reponse = await fetch('http://localhost:5678/api/works');
@@ -52,7 +49,6 @@ function createFigure(works, lieu) {
     // clear l'endroit où vont apparaitre les images
     const location = document.querySelector(`.${lieu}`)
     location.innerHTML=""
-    
    
     for (let i=0; i < works.length; i++) {
 
@@ -61,6 +57,8 @@ function createFigure(works, lieu) {
         const imgVignette = document.createElement("img")
         imgVignette.src = vignette.imageUrl
         imgVignette.alt = vignette.title
+        // ajout de l'ID à la vignette pour fonctions ultérieures
+        imgVignette.id = vignette.id
        
         const figure = document.createElement("figure")
         console.log(location)
@@ -68,6 +66,8 @@ function createFigure(works, lieu) {
         if (location.className === `mini-gallery`) {
             const trash = document.createElement("button")
             trash.className = 'btn-trash'
+            // ajout ID au bouton trash correspondant à la vignette sur laquelle il se trouve
+            trash.id=vignette.id
             trash.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
             location.append(figure)
             figure.append(imgVignette)    
@@ -123,19 +123,56 @@ boutonTous.addEventListener("click", function () {
     createFigure(works, 'gallery')
 })
 
-// ouverture de la modale
+// ouverture de la modale et création du contenu
 
 const dialog = document.querySelector("dialog")
 const modif = document.getElementById("modif")
-const close = document.getElementById("close")
+const fermer = document.getElementById("close")
 
 modif.addEventListener("click", (event) => {
     event.preventDefault()
     dialog.showModal()
     createFigure(works, 'mini-gallery')
+
+
+          // Appel de la fonction lors du click sur trash
+          let trash = document.querySelectorAll(".btn-trash")
+          for (let i=0; i<trash.length; i++) {
+          trash[i].addEventListener("click", (event) => {
+          event.preventDefault()
+          deleteWorks(trash[i].id)
+          createFigure(works, 'gallery')
+          createFigure(works, 'mini-gallery')
+          })}
+    
+
   })
 
-  close.addEventListener("click", (event) => {
+
+  
+fermer.addEventListener("click", (event) => {
     event.preventDefault()
     dialog.close()
   })
+
+
+//   fonction pour supprimer les works via le bouton trash
+async function deleteWorks(id) {
+    console.log(token)
+    const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+        method: 'DELETE',
+        headers: { 
+            accept: "*/*",
+            Authorization: `Bearer ${token.replace(/^"(.+(?="$))"$/, '$1')}`,
+        },
+        body: id,
+    })
+    if (response.ok) {
+        console.log("élément supprimé avec succes")
+       
+    } else {
+        alert("Echec de suppression");
+      }
+    }
+
+
