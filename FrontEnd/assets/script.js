@@ -79,9 +79,6 @@ function createFigure(works, lieu) {
             figure.append(imgVignette)      
             figure.append(captionVignette)        
         }
-          
-      
-   
 }
 }
 
