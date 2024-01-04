@@ -130,9 +130,15 @@ boutonTous.addEventListener("click", function () {
 
 const dialog = document.querySelector("dialog")
 const modif = document.getElementById("modif")
+const close = document.getElementById("close")
 
 modif.addEventListener("click", (event) => {
     event.preventDefault()
     dialog.showModal()
     createFigure(works, 'mini-gallery')
+  })
+
+  close.addEventListener("click", (event) => {
+    event.preventDefault()
+    dialog.close()
   })
