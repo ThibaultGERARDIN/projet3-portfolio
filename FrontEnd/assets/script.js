@@ -57,6 +57,7 @@ function createFigure(works, lieu) {
         const imgVignette = document.createElement("img")
         imgVignette.src = vignette.imageUrl
         imgVignette.alt = vignette.title
+        imgVignette.className = 'works-img'
         // ajout de l'ID à la vignette pour fonctions ultérieures
         imgVignette.id = vignette.id
        
@@ -68,6 +69,7 @@ function createFigure(works, lieu) {
             trash.className = 'btn-trash'
             // ajout ID au bouton trash correspondant à la vignette sur laquelle il se trouve
             trash.id=vignette.id
+            trash.alt=vignette.title
             trash.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
             location.append(figure)
             figure.append(imgVignette)    
@@ -133,23 +135,33 @@ modif.addEventListener("click", (event) => {
     event.preventDefault()
     dialog.showModal()
     createFigure(works, 'mini-gallery')
+        // selection des boutons poubelle + appel fonction delete sur l'ID correspondant
+        dialog.querySelectorAll(".btn-trash").forEach(function(e) {
+            e.addEventListener("click", (event) => {
+            event.preventDefault()
+            event.stopPropagation()
+            // Demande de validation avant suppression de l'élément
+            let validation = confirm(`Êtes-vous sûr(e) de vouloir supprimer le projet ${e.id} : ${e.alt}?`)
+            // procède à la suppression si validé
+            if (validation === true){
+                deleteWorks(e.id)
+                console.log("Projet supprimé")
+            } 
+        })  
+    })        
+})
 
-
-          // Appel de la fonction lors du click sur trash
-          let trash = document.querySelectorAll(".btn-trash")
-          for (let i=0; i<trash.length; i++) {
-          trash[i].addEventListener("click", (event) => {
-          event.preventDefault()
-          deleteWorks(trash[i].id)
-          createFigure(works, 'gallery')
-          createFigure(works, 'mini-gallery')
-          })}
-    
-
-  })
-
-
-  
+// ferme la modale si on clique en dehors
+dialog.addEventListener('click', (event) => {
+    // récupère l'id de l'élément cliqué
+    const target = event.target.getAttribute("class")
+    // si l'élément cliqué n'a pas d'id (donc en dehors de la modale) ferme la modale
+    if (target === null) {
+        dialog.close();
+    }
+})
+   
+// Ferme la modale au click sur le bouton X
 fermer.addEventListener("click", (event) => {
     event.preventDefault()
     dialog.close()
@@ -158,7 +170,6 @@ fermer.addEventListener("click", (event) => {
 
 //   fonction pour supprimer les works via le bouton trash
 async function deleteWorks(id) {
-    console.log(token)
     const response = await fetch(`http://localhost:5678/api/works/${id}`, {
         method: 'DELETE',
         headers: { 
