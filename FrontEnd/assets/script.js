@@ -3,17 +3,17 @@
 // Cherche si le token de login est présent et passe en mode édition si c'est OK
 let token = window.localStorage.getItem('token')
 
+// affiche les éléments du mode édition si le token est détecté
 if (token !== null) {
-     document.querySelector('.edition').style.display = 'flex'
-     document.querySelector('.filtres').style.display = 'none'
-     document.getElementById('logout-link').style.display = 'flex'
-     document.getElementById('login-link').style.display = 'none'
-     document.getElementById('modif').style.display = 'flex'
+    document.querySelector('.edition').style.display = 'flex'
+    document.querySelector('.filtres').style.display = 'none'
+    document.getElementById('logout-link').style.display = 'flex'
+    document.getElementById('login-link').style.display = 'none'
+    document.getElementById('modif').style.display = 'flex'
 
 }
 
 // comportement du lien logout 
-
 const logout = document.getElementById('logout-link')
 logout.addEventListener('click', function () {
     // supprime le token du localstorage
@@ -29,92 +29,104 @@ async function fetchWorks() {
     const reponse = await fetch('http://localhost:5678/api/works');
     works = await reponse.json();
     // Transformation des works en JSON
-    const valeurWorks = JSON.stringify(works);
+    // const valeurWorks = JSON.stringify(works);
     // Stockage des informations dans le localStorage
-    window.localStorage.setItem('works', valeurWorks);
+    // window.localStorage.setItem('works', valeurWorks);
+    return works
 }
 // } else {
 //     works = JSON.parse(works)
 // }
 
-fetchWorks()
+// let works = window.localStorage.getItem('works')
 
-let works = window.localStorage.getItem('works')
-
-works = JSON.parse(works)
+// works = JSON.parse(works)
 
 
 // fonction qui créer les vignettes sur un "lieu" donné (page d'accueil => gallery ou modale => mini-galery )
-function createFigure(works, lieu) {
-    // clear l'endroit où vont apparaitre les images
+async function createFigure(catId, lieu) {
+
+    // récupère les projets sur l'API et les stocke dans une variable
+    const getWorks = await fetchWorks()
+    let works
+    // selectionne les projets à faire apparaitre en fonction de la catégorie selectionnée (null si tout)
+    if (catId !== null) {
+        works = getWorks.filter(function (getWorks) {
+            return getWorks.category.id === catId
+        })
+    } else {
+        works = getWorks
+    }
+
+    // récupère l'endroit où doit être créée la galerie et retire tout élément déjà présent
     const location = document.querySelector(`.${lieu}`)
-    location.innerHTML=""
-   
-    for (let i=0; i < works.length; i++) {
+    location.innerHTML = ""
+
+    // créé les éléments HTML et les rempli avec les données récupérées grâce à l'API
+    for (let i = 0; i < works.length; i++) {
 
         const vignette = works[i]
 
+        // création de l'image avec les attributs nécessaires
         const imgVignette = document.createElement("img")
         imgVignette.src = vignette.imageUrl
         imgVignette.alt = vignette.title
         imgVignette.className = 'works-img'
-        // ajout de l'ID à la vignette pour fonctions ultérieures
         imgVignette.id = vignette.id
-       
+        
+        // idem pour le conteneur de l'image
         const figure = document.createElement("figure")
-        console.log(location)
-        // comportement si fonction lancée dans la modale pour ajout bouton supprimer et retrait du caption
+        figure.id = vignette.id
+
+        // vérifie l'emplacement choisi et créé les éléments en fonction
         if (location.className === `mini-gallery`) {
+            // si dans la modale : ajout d'un bouton poubelle avec les attributs nécessaires
             const trash = document.createElement("button")
             trash.className = 'btn-trash'
-            // ajout ID au bouton trash correspondant à la vignette sur laquelle il se trouve
-            trash.id=vignette.id
-            trash.alt=vignette.title
+            trash.id = vignette.id
+            trash.alt = vignette.title
             trash.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
+
+            // génère les éléments dans le code html
             location.append(figure)
-            figure.append(imgVignette)    
+            figure.append(imgVignette)
             figure.append(trash)
         } else {
+            // si dans la galerie : rajoute un caption aux images des projets
             const captionVignette = document.createElement("figcaption")
-            captionVignette.innerText = vignette.title  
+            captionVignette.innerText = vignette.title
+            // génère les éléments dans le code html
             location.append(figure)
-            figure.append(imgVignette)      
-            figure.append(captionVignette)        
+            figure.append(imgVignette)
+            figure.append(captionVignette)
         }
-}
+    }
 }
 
-createFigure(works, 'gallery')
+// appel de la fonction pour remplir les galeries
+createFigure(null, 'gallery')
+createFigure(null, 'mini-gallery')
 
 
 // Utilisation du filtre Objets pour retourner les travaux avec la catégorie Objets uniquement
 const boutonObjets = document.getElementById("objets");
 
 boutonObjets.addEventListener("click", function () {
-    const worksObjet = works.filter(function (works) {
-        return works.category.id === 1
-    })
-    createFigure(worksObjet, 'gallery')
+    createFigure(1, 'gallery')
 })
 
 // Utilisation du filtre Appartements pour retourner les travaux avec la catégorie Appartements uniquement
 const boutonAppartements = document.getElementById("appartements");
 
 boutonAppartements.addEventListener("click", function () {
-    const worksApparttements = works.filter(function (works) {
-        return works.category.id === 2
-    })
-    createFigure(worksApparttements, 'gallery')
+    createFigure(2, 'gallery')
 })
 
 // Utilisation du filtre Hotels et restaurants pour retourner les travaux avec la catégorie Hotels et restaurants uniquement
 const boutonHotelsetresto = document.getElementById("hotelsetresto");
 
 boutonHotelsetresto.addEventListener("click", function () {
-    const worksHotelsetresto = works.filter(function (works) {
-        return works.category.id === 3
-    })
-    createFigure(worksHotelsetresto, 'gallery')
+    createFigure(3, 'gallery')
 })
 
 // Filtre tous pour reset
@@ -122,68 +134,70 @@ boutonHotelsetresto.addEventListener("click", function () {
 const boutonTous = document.getElementById("tous");
 
 boutonTous.addEventListener("click", function () {
-    createFigure(works, 'gallery')
+    createFigure(null, 'gallery')
 })
 
-// ouverture de la modale et création du contenu
+
+// Partie concernant la modale (ouverture et fermeture)
 
 const dialog = document.querySelector("dialog")
 const modif = document.getElementById("modif")
 const fermer = document.getElementById("close")
 
+// ouverture de la modale 
 modif.addEventListener("click", (event) => {
     event.preventDefault()
     dialog.showModal()
-    createFigure(works, 'mini-gallery')
-        // selection des boutons poubelle + appel fonction delete sur l'ID correspondant
-        dialog.querySelectorAll(".btn-trash").forEach(function(e) {
-            e.addEventListener("click", (event) => {
-            event.preventDefault()
-            event.stopPropagation()
-            // Demande de validation avant suppression de l'élément
-            let validation = confirm(`Êtes-vous sûr(e) de vouloir supprimer le projet ${e.id} : ${e.alt}?`)
-            // procède à la suppression si validé
-            if (validation === true){
-                deleteWorks(e.id)
-                console.log("Projet supprimé")
-            } 
-        })  
-    })        
+           // selection des boutons poubelle + appel fonction delete sur l'ID correspondant
+        
+           dialog.querySelectorAll(".btn-trash").forEach(function (e) {
+            e.addEventListener("click", () => {
+                // Demande de validation avant suppression de l'élément
+                let validation = confirm(`Êtes-vous sûr(e) de vouloir supprimer le projet ${e.id} : ${e.alt}?`)
+                // procède à la suppression si validé
+                if (validation === true) {
+                    deleteWorks(e.id)
+                }
+            })
+        })
 })
+
 
 // ferme la modale si on clique en dehors
 dialog.addEventListener('click', (event) => {
-    // récupère l'id de l'élément cliqué
+    // récupère la classe de l'élément cliqué
     const target = event.target.getAttribute("class")
-    // si l'élément cliqué n'a pas d'id (donc en dehors de la modale) ferme la modale
+    // si l'élément cliqué n'a pas de class (donc en dehors de la modale) ferme la modale
     if (target === null) {
         dialog.close();
     }
 })
-   
+
 // Ferme la modale au click sur le bouton X
 fermer.addEventListener("click", (event) => {
     event.preventDefault()
     dialog.close()
-  })
+})
 
 
-//   fonction pour supprimer les works via le bouton trash
+//   fonction pour supprimer les projets de la base de donnée en fonction de l'id indiquée
 async function deleteWorks(id) {
     const response = await fetch(`http://localhost:5678/api/works/${id}`, {
         method: 'DELETE',
-        headers: { 
+        headers: {
             accept: "*/*",
             Authorization: `Bearer ${token.replace(/^"(.+(?="$))"$/, '$1')}`,
         },
         body: id,
     })
     if (response.ok) {
-        console.log("élément supprimé avec succes")
-       
+        console.log("Le projet a bien été supprimé")
+        // recréé les galeries sans le projet qui a été supprimé
+        createFigure(null, 'gallery')
+        createFigure(null, 'mini-gallery')
     } else {
         alert("Echec de suppression");
-      }
     }
+}
 
 
