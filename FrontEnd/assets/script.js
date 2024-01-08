@@ -55,14 +55,13 @@ function createFigure(works, lieu) {
         const vignette = works[i]
 
         const imgVignette = document.createElement("img")
+        // ajout des attributs nécessaires
         imgVignette.src = vignette.imageUrl
         imgVignette.alt = vignette.title
         imgVignette.className = 'works-img'
-        // ajout de l'ID à la vignette pour fonctions ultérieures
         imgVignette.id = vignette.id
        
         const figure = document.createElement("figure")
-        console.log(location)
         // comportement si fonction lancée dans la modale pour ajout bouton supprimer et retrait du caption
         if (location.className === `mini-gallery`) {
             const trash = document.createElement("button")
@@ -145,7 +144,14 @@ modif.addEventListener("click", (event) => {
             // procède à la suppression si validé
             if (validation === true){
                 deleteWorks(e.id)
-                console.log("Projet supprimé")
+                // Message popup confirmant la suppression
+                alert(`Le projet ${e.id} : ${e.alt} a bien été supprimé.`)
+                // est censé remettre à jour les galeries mais ne fonctionne pas
+                // const imgWorks = document.getElementById(e.id)
+                // console.log(imgWorks)
+                // imgWorks.remove()
+                createFigure(works, 'gallery')
+                createFigure(works, 'mini-gallery')
             } 
         })  
     })        
