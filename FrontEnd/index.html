@@ -37,13 +37,47 @@
 		</header>
 		<main>
 			<dialog>
-				<div class="modale" id="modale">
-				<button id="close"><i class="fa-solid fa-xmark"></i></button>
-					<h3 class="titre-modale" id="modale">Galerie photo</h3>
-					<div class="mini-gallery" id="modale">
+				<div class="modale" id="modale-gallery">
+					<nav class="nav-modale">
+						<button id="retour"><i class="fa-solid fa-arrow-left"></i></button>
+						<button id="close"><i class="fa-solid fa-xmark"></i></button>
+					</nav>
+					<h3 class="titre-modale">Galerie photo</h3>
+					<div class="mini-gallery">
 					</div>
 					<button id="btn-ajouter" class="btn-vert">Ajouter une photo</button>
 				</div>
+				<div class="modale" id="modale-ajout">
+					<nav class="nav-modale">
+						<button id="retour"><i class="fa-solid fa-arrow-left"></i></button>
+						<button id="close"><i class="fa-solid fa-xmark"></i></button>
+					</nav>
+					<h3 class="titre-modale">Ajout photo</h3>
+					<form id="ajout-projet" class="ajout-projet">
+						<div class="img-projet">
+							<div class="affiche-ajout">
+								<i class="fa-regular fa-image bigandgrey"></i>
+								<button class="ajout-img">
+									<label for="ajout-img-projet" class="ajout-img-projet">+ Ajouter photo</label>
+									<input type="file" name="ajout-img-projet" id="ajout-img-projet"
+										class="ajout-img-projet" accept=".jpg,.png" required>
+								</button>
+								<p class="description">jpg, png : 4mo max</p>
+							</div>
+							<div class="affiche-appercu">
+								<img class="appercu">
+								<button class="changer-img">Changer d'image</button>
+							</div>
+						</div>
+						<label for="titre-projet" class="label-ajout">Titre</label>
+						<input type="text" name="titre-projet" id="titre-projet" class="titre-projet" required>
+						<label for="cat-projet" class="label-ajout">Catégorie</label>
+						<select id="cat-projet" name="cat-projet" class="cat-projet" required>
+						</select>
+					</form>
+					<button type="submit" form="ajout-projet" id="btn-valider" class="btn-vert">Valider</button>
+				</div>
+
 			</dialog>
 			<section id="introduction">
 				<figure>
