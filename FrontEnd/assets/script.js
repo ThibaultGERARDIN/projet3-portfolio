@@ -2,6 +2,7 @@
 
 // Cherche si le token de login est présent et passe en mode édition si c'est OK
 let token = window.sessionStorage.getItem('token')
+let userId = Number(window.sessionStorage.getItem('userId'))
 
 // affiche les éléments du mode édition si le token est détecté
 if (token !== null) {
@@ -20,6 +21,8 @@ logout.addEventListener('click', function () {
     sessionStorage.removeItem('token')
 
 })
+
+
 
 
 // fonction pour récupérer les travaux sur l'API
@@ -249,8 +252,8 @@ ajouterImg.addEventListener('change', () => {
     afficheAjout.style.display = 'none'
     afficheAppercu.style.display = 'flex'
     // récupère l'URL pour afficher l'image
-    appercuImg.src = `${URL.createObjectURL(ajouterImg.files[0])}`
-    appercuImg.alt = `${ajouterImg.name}`
+    appercuImg.src = URL.createObjectURL(ajouterImg.files[0])
+    appercuImg.alt = ajouterImg.name
 
 })
 
@@ -280,4 +283,51 @@ formAjout.addEventListener('change', ()=> {
         btnValider.disabled = false
     }
 })
+
+btnValider.addEventListener('click', (e) => {
+    e.preventDefault()
+     const newTitle = titreProjet.value
+     const newImageurl = appercuImg.src.replace("blob:", "")
+     const newCategoryid = catProjet.value
+    // console.log(newTitle)
+    // console.log(newImageurl)
+    // console.log(newCategoryid)
+    ajoutProjet(newTitle, newImageurl, newCategoryid)
+})
+
+
+// fonction POST pour ajouter le projet dans la base de donnée
+async function ajoutProjet(newTitle, newImageurl, newCategoryid) {
+    // récupère les données works actuelles
+    const works = await fetchWorks()
+    // récupère l'ID la plus "haute" des works actuels
+    let newId = Math.max(...works.map(item => item.id))
+    // rajoute 1 à l'ID la plus haute
+    newId++
+    let newProject = {
+        id: newId,
+        title: newTitle,
+        imageUrl: newImageurl,
+        categoryId: newCategoryid,
+        userId: userId
+    }
+    const response = await fetch('http://localhost:5678/api/works', {
+        method: 'POST',
+        headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${token.replace(/^"(.+(?="$))"$/, '$1')}`,
+            "Content-Type": "application/json",
+        },
+        // body de la requète avec les infos 
+        body: JSON.stringify(newProject),
+    })
+    if (response.ok) {
+        console.log("Le projet a bien été ajouté")
+        // recréé les galeries avec le projet qui a été ajouté
+        createFigure(null, 'gallery')
+        createFigure(null, 'mini-gallery')
+    } else {
+        alert("Echec de l'ajout")
+    }
+}
 

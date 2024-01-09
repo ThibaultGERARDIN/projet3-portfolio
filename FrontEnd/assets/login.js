@@ -18,12 +18,15 @@ function login(email, mdp) {
     // rajouter le localstorage pour "sauvegarder" le fait d'etre logged in
     .then((data) => {
         let tokenValue = JSON.stringify(data['token']) 
+        let userIdvalue = data['userId']
         if (data.error) {
           alert("Utilisateur ou mot de passe non reconnu")
         } else {
             // reste à trouver comment selectionner sur index.html
 
-        localStorage.setItem('token', tokenValue); 
+        sessionStorage.setItem('token', tokenValue)
+        sessionStorage.setItem('userId', userIdvalue);
+
         location.href = "index.html"      
 
         }
