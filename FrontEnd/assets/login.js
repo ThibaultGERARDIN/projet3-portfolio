@@ -1,5 +1,4 @@
-// Page js pour la fonction post qui va permettre de se login
-
+// Fonction de login : fetch POST sur l'API à l'adresse login, prend en arguments email et mdp
 
 function login(email, mdp) {
     fetch('http://localhost:5678/api/users/login', {
@@ -15,20 +14,18 @@ function login(email, mdp) {
         }
     )
     .then((response) => response.json())
-    // rajouter le localstorage pour "sauvegarder" le fait d'etre logged in
     .then((data) => {
+      // récupère le token et le transforme en string
         let tokenValue = JSON.stringify(data['token']) 
-        let userIdvalue = data['userId']
+
         if (data.error) {
+          // si le serveur renvoie une mauvaise réponse
           alert("Utilisateur ou mot de passe non reconnu")
         } else {
-            // reste à trouver comment selectionner sur index.html
-
+          // stocke le token dans le sessionStorage pour rester connecter tant que le navigateur n'est pas fermé
         sessionStorage.setItem('token', tokenValue)
-        sessionStorage.setItem('userId', userIdvalue);
-
+        // renvoie l'utilisateur sur la page index
         location.href = "index.html"      
-
         }
       })
     .catch((err) => {
@@ -39,13 +36,16 @@ function login(email, mdp) {
 
 
 
-
+// récupère le bouton submit de la page login
 const submit = document.getElementById("btn-submit")
+
 
 submit.addEventListener("click", (event) => {
     event.preventDefault()
+    // récupère les infos rentrées dans les champs du login
     const email = document.getElementById("login-email").value
     const mdp = document.getElementById("mdp").value
+    // check si l'email et le mdp correspondent à ce qui est attendu : si oui lance la fonction, si non envoie une alert
     if (email === "sophie.bluel@test.tld" && mdp ==="S0phie") {
       login(email, mdp)
     } else {

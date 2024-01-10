@@ -2,17 +2,20 @@
 
 // Cherche si le token de login est présent et passe en mode édition si c'est OK
 let token = window.sessionStorage.getItem('token')
-let userId = Number(window.sessionStorage.getItem('userId'))
 
-// affiche les éléments du mode édition si le token est détecté
+function checkConnected(token) {
+    // affiche les éléments du mode édition si le token est détecté
 if (token !== null) {
     document.querySelector('.edition').style.display = 'flex'
     document.querySelector('.filtres').style.display = 'none'
     document.getElementById('logout-link').style.display = 'flex'
     document.getElementById('login-link').style.display = 'none'
     document.getElementById('modif').style.display = 'flex'
-
+} 
 }
+
+// appelle la fonction qui passe en mode édition si l'utilisateur est connecté
+checkConnected(token)
 
 // comportement du lien logout 
 const logout = document.getElementById('logout-link')
@@ -69,7 +72,7 @@ async function createFigure(catId, lieu) {
         const imgVignette = document.createElement("img")
         imgVignette.src = vignette.imageUrl
         imgVignette.alt = vignette.title
-        imgVignette.className = 'works-img'
+        imgVignette.className = "works-img"
         imgVignette.id = vignette.id
 
         // idem pour le conteneur de l'image
@@ -80,7 +83,7 @@ async function createFigure(catId, lieu) {
         if (location.className === `mini-gallery`) {
             // si dans la modale : ajout d'un bouton poubelle avec les attributs nécessaires
             const trash = document.createElement("button")
-            trash.className = 'btn-trash'
+            trash.className = "btn-trash"
             trash.id = vignette.id
             trash.alt = vignette.title
             trash.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
@@ -106,34 +109,49 @@ createFigure(null, 'gallery')
 createFigure(null, 'mini-gallery')
 
 
-// Utilisation du filtre Objets pour retourner les travaux avec la catégorie Objets uniquement
-const boutonObjets = document.getElementById("objets");
+
+// fonction pour générer automatiquement les filtres par catégorie (sauf le "Tous")
+async function createFiltres() {
+    let categories = await fetchCategories()
+    console.log(categories)
+    for (let i=0; i < categories.length; i++) {
+        const catProj = categories[i]
+        const btnFiltre = document.createElement("button")
+        btnFiltre.className = "btn-filtres"
+        btnFiltre.id = `btn${catProj.id}`
+        btnFiltre.innerText = `${catProj.name}`
+        document.querySelector('.filtres').append(btnFiltre)
+    } 
+    // Utilisation du filtre Objets pour retourner les travaux avec la catégorie Objets uniquement
+const boutonObjets = document.getElementById("btn1");
 
 boutonObjets.addEventListener("click", function () {
     createFigure(1, 'gallery')
 })
 
 // Utilisation du filtre Appartements pour retourner les travaux avec la catégorie Appartements uniquement
-const boutonAppartements = document.getElementById("appartements");
+const boutonAppartements = document.getElementById("btn2");
 
 boutonAppartements.addEventListener("click", function () {
     createFigure(2, 'gallery')
 })
 
 // Utilisation du filtre Hotels et restaurants pour retourner les travaux avec la catégorie Hotels et restaurants uniquement
-const boutonHotelsetresto = document.getElementById("hotelsetresto");
+const boutonHotelsetresto = document.getElementById("btn3");
 
 boutonHotelsetresto.addEventListener("click", function () {
     createFigure(3, 'gallery')
 })
+}
 
 // Filtre tous pour reset
-
 const boutonTous = document.getElementById("tous");
 
 boutonTous.addEventListener("click", function () {
     createFigure(null, 'gallery')
 })
+
+createFiltres()
 
 
 // Partie concernant la modale (ouverture et fermeture)
