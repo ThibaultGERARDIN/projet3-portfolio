@@ -46,5 +46,10 @@ submit.addEventListener("click", (event) => {
     event.preventDefault()
     const email = document.getElementById("login-email").value
     const mdp = document.getElementById("mdp").value
-    login(email, mdp)
+    if (email === "sophie.bluel@test.tld" && mdp ==="S0phie") {
+      login(email, mdp)
+    } else {
+      alert("Utilisateur non reconnu")
+    }
+    
 })

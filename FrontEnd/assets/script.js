@@ -71,7 +71,7 @@ async function createFigure(catId, lieu) {
         imgVignette.alt = vignette.title
         imgVignette.className = 'works-img'
         imgVignette.id = vignette.id
-        
+
         // idem pour le conteneur de l'image
         const figure = document.createElement("figure")
         figure.id = vignette.id
@@ -154,18 +154,18 @@ modif.addEventListener("click", (event) => {
     modaleAjout.style.display = 'none'
     retour.style.visibility = 'hidden'
 
-           // selection des boutons poubelle + appel fonction delete sur l'ID correspondant
-        
-           dialog.querySelectorAll(".btn-trash").forEach(function (e) {
-            e.addEventListener("click", () => {
-                // Demande de validation avant suppression de l'élément
-                let validation = confirm(`Êtes-vous sûr(e) de vouloir supprimer le projet ${e.id} : ${e.alt}?`)
-                // procède à la suppression si validé
-                if (validation === true) {
-                    deleteWorks(e.id)
-                }
-            })
+    // selection des boutons poubelle + appel fonction delete sur l'ID correspondant
+
+    dialog.querySelectorAll(".btn-trash").forEach(function (e) {
+        e.addEventListener("click", () => {
+            // Demande de validation avant suppression de l'élément
+            let validation = confirm(`Êtes-vous sûr(e) de vouloir supprimer le projet ${e.id} : ${e.alt}?`)
+            // procède à la suppression si validé
+            if (validation === true) {
+                deleteWorks(e.id)
+            }
         })
+    })
 })
 
 
@@ -229,7 +229,8 @@ const ajouterImg = document.getElementById("ajout-img-projet")
 const appercuImg = document.querySelector(".appercu")
 const changerImg = document.querySelector(".changer-img")
 
-ajouterProj.addEventListener('click', function(e) {
+
+ajouterProj.addEventListener('click', function (e) {
     e.preventDefault()
     // remplace la modale galerie par la modale ajout
     modaleGallery.style.display = 'none'
@@ -238,44 +239,42 @@ ajouterProj.addEventListener('click', function(e) {
     afficheAppercu.style.display = 'none'
     // génère le choix des catégories (à rendre dynamique depuis l'API plus tard) 
     // première option vide et disabled 
-    catProjet.innerHTML =`<option value="" class="cat-option" disabled selected></option>
+    catProjet.innerHTML = `<option value="" class="cat-option" disabled selected></option>
     <option value="1" class="cat-option">Objets</option>
     <option value="2" class="cat-option">Appartements</option>
     <option value="3" class="cat-option">Hotels & restaurants</option>`
-    titreProjet.value=""
+    titreProjet.value = ""
 
 
 
-// affichage de l'appercu de la photo lors de l'ajout
-ajouterImg.addEventListener('change', () => {
-    // cache l'input d'ajout et affiche l'image à la place
-    afficheAjout.style.display = 'none'
-    afficheAppercu.style.display = 'flex'
-    // récupère l'URL pour afficher l'image
-    appercuImg.src = URL.createObjectURL(ajouterImg.files[0])
-    appercuImg.alt = ajouterImg.name
+    // affichage de l'appercu de la photo lors de l'ajout
+    ajouterImg.addEventListener('change', () => {
+        // cache l'input d'ajout et affiche l'image à la place
+        afficheAjout.style.display = 'none'
+        afficheAppercu.style.display = 'flex'
+        // récupère l'URL pour afficher l'image
+        appercuImg.src = URL.createObjectURL(ajouterImg.files[0])
+        appercuImg.alt = ajouterImg.name
+
+    })
+
+    // Possibilité de changer de photo en cliquand sur le bouton
+    changerImg.addEventListener('click', () => {
+        // reset l'image pour un ajout ultérieur
+        appercuImg.src = ""
+        appercuImg.alt = ""
+        // cache la div d'affichage de l'appercu et affiche l'input pour ajouter image
+        afficheAjout.style.display = 'flex'
+        afficheAppercu.style.display = 'none'
+    })
 
 })
 
-// Possibilité de changer de photo en cliquand sur le bouton
-changerImg.addEventListener('click', () => {
-    // reset l'image pour un ajout ultérieur
-    appercuImg.src =""
-    appercuImg.alt =""
-    // cache la div d'affichage de l'appercu et affiche l'input pour ajouter image
-    afficheAjout.style.display = 'flex'
-    afficheAppercu.style.display = 'none'
-})
 
-})
-
-// fonction fetch en POST pour ajouter un projet avec le bouton valider du formulaire d'ajout
-// récupère les infos du formulaire pour compléter la requète
-
+// desactive le bouton valider tant que l'ensemble du formulaire n'est pas rempli
 const btnValider = document.getElementById("btn-valider")
 btnValider.disabled = true
-
-formAjout.addEventListener('change', ()=> {
+formAjout.addEventListener('change', () => {
     if (formAjout.reportValidity() === false) {
         btnValider.disabled = true
         console.log(btnValider.disabled)
@@ -284,42 +283,36 @@ formAjout.addEventListener('change', ()=> {
     }
 })
 
+// comportement du bouton Valider au click (récupère les infos et envoie la demande POST)
 btnValider.addEventListener('click', (e) => {
     e.preventDefault()
-     const newTitle = titreProjet.value
-     const newImageurl = appercuImg.src.replace("blob:", "")
-     const newCategoryid = catProjet.value
-    // console.log(newTitle)
-    // console.log(newImageurl)
-    // console.log(newCategoryid)
-    ajoutProjet(newTitle, newImageurl, newCategoryid)
+    // récupère les valeurs dans le formulaire d'ajout de projet
+    const newTitle = titreProjet.value
+    const newImage = ajouterImg.files[0]
+    const newCategoryid = Number(catProjet.value)
+    // construit l'objet formData à partir des valeurs ci-dessus
+    const formData = new FormData()
+    formData.append("image", newImage)
+    formData.append("title", newTitle)
+    formData.append("category", newCategoryid)
+    // appel de la fonction pour ajouter le projet
+    ajoutProjet(formData)
+    // repasse la modale sur la partie gallerie
+    modaleGallery.style.display = 'flex'
+    modaleAjout.style.display = 'none'
 })
 
 
-// fonction POST pour ajouter le projet dans la base de donnée
-async function ajoutProjet(newTitle, newImageurl, newCategoryid) {
-    // récupère les données works actuelles
-    const works = await fetchWorks()
-    // récupère l'ID la plus "haute" des works actuels
-    let newId = Math.max(...works.map(item => item.id))
-    // rajoute 1 à l'ID la plus haute
-    newId++
-    let newProject = {
-        id: newId,
-        title: newTitle,
-        imageUrl: newImageurl,
-        categoryId: newCategoryid,
-        userId: userId
-    }
+// fonction fetch en POST pour ajouter le projet dans la base de donnée
+
+async function ajoutProjet(formData) {
     const response = await fetch('http://localhost:5678/api/works', {
         method: 'POST',
         headers: {
             accept: "application/json",
             Authorization: `Bearer ${token.replace(/^"(.+(?="$))"$/, '$1')}`,
-            "Content-Type": "application/json",
         },
-        // body de la requète avec les infos 
-        body: JSON.stringify(newProject),
+        body: formData
     })
     if (response.ok) {
         console.log("Le projet a bien été ajouté")
