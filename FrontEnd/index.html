@@ -14,7 +14,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
 		integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
 		crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<script src="./assets/script.js" defer></script>
+	<script type="module" src="./assets/script.js"></script>
+
 </head>
 
 <body>
@@ -57,11 +58,13 @@
 						<div class="img-projet">
 							<div class="affiche-ajout">
 								<i class="fa-regular fa-image bigandgrey"></i>
-								<button class="ajout-img">
-									<label for="ajout-img-projet" class="ajout-img-projet">+ Ajouter photo</label>
-									<input type="file" name="ajout-img-projet" id="ajout-img-projet"
-										class="ajout-img-projet" accept=".jpg,.png" required>
+								<div class="ajout-img">
+								<button class="btn-img">
+									+ Ajouter photo
 								</button>
+								<input type="file" name="ajout-img-projet" id="ajout-img-projet"
+										class="ajout-img-projet" accept=".jpg,.png" required>
+								</div>
 								<p class="description">jpg, png : 4mo max</p>
 							</div>
 							<div class="affiche-appercu">

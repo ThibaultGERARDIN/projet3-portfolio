@@ -466,12 +466,11 @@ dialog {
 	background-color: #E8F1F6;
 }
 
-.ajout-img {
+
+.btn-img {
+	position: absolute;
 	border: none;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
+	text-align: center;
 	border-radius: 50px;
 	width: 173px;
 	height: 36px;
@@ -481,8 +480,20 @@ dialog {
 	background-color: #CBD6DC;
 }
 
-.ajout-img input{
-	visibility: collapse;
+.ajout-img {
+	position: relative;
+	width: 173px;
+	height: 36px;
+}
+
+.ajout-img input {
+	position: relative;
+	text-align: right;
+	width: 173px;
+	height: 36px;
+	opacity: 0;
+	z-index: 2;
+
 }
 
 .bigandgrey {
