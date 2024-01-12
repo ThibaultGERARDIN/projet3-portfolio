@@ -40,7 +40,7 @@ export async function createFigure(catId, lieu) {
             // si dans la modale : ajout d'un bouton poubelle avec les attributs nécessaires
             const trash = document.createElement("button")
             trash.className = "btn-trash"
-            trash.id = vignette.id
+            trash.id = `trash${vignette.id}`
             trash.alt = vignette.title
             trash.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
 

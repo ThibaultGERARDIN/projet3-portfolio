@@ -1,16 +1,13 @@
 import { deleteWorks } from "./deleteworks.js"
 import { addWorks } from "./addworks.js"
-
+import { fetchCategories } from "./fetchcategories.js"
 
 // Partie concernant la modale (ouverture et fermeture)
 
 const dialog = document.querySelector("dialog")
 const modif = document.getElementById("modif")
-const fermer = document.getElementById("close")
-const retour = document.getElementById("retour")
 const modaleGallery = document.getElementById("modale-gallery")
 const modaleAjout = document.getElementById("modale-ajout")
-
 
 export function modalGallery() {
     // ouverture de la modale 
@@ -20,17 +17,21 @@ export function modalGallery() {
         // réinitialise l'affichage des modales 
         modaleGallery.style.display = 'flex'
         modaleAjout.style.display = 'none'
-        retour.style.visibility = 'hidden'
+        back.style.visibility = 'hidden'
 
         // selection des boutons poubelle + appel fonction delete sur l'ID correspondant
-
-        dialog.querySelectorAll(".btn-trash").forEach(function (e) {
+        const trash = document.querySelectorAll(".btn-trash")
+       
+        console.log(trash)
+        trash.forEach(function (e) {
             e.addEventListener("click", () => {
+                // extrait l'Id du projet depuis l'Id du bouton trash
+                const delId = e.id.replace("trash", "")
                 // Demande de validation avant suppression de l'élément
-                let validation = confirm(`Êtes-vous sûr(e) de vouloir supprimer le projet ${e.id} : ${e.alt}?`)
+                let validation = confirm(`Êtes-vous sûr(e) de vouloir supprimer le projet ${delId} : ${e.alt}?`)
                 // procède à la suppression si validé
                 if (validation === true) {
-                    deleteWorks(e.id)
+                    deleteWorks(delId)
                 }
             })
         })
@@ -48,22 +49,12 @@ export function modalGallery() {
     })
 
 
-
+    const fermer = document.getElementById("close")
     // Ferme la modale au click sur le bouton X
     fermer.addEventListener("click", (event) => {
         event.preventDefault()
         dialog.close()
     })
-
-    // Retour à la modale galerie au click sur le bouton fleche
-    retour.addEventListener("click", (event) => {
-        event.preventDefault()
-        // réinitialise l'affichage des modales 
-        modaleGallery.style.display = 'flex'
-        modaleAjout.style.display = 'none'
-        retour.style.visibility = 'hidden'
-    })
-
 }
 
 
@@ -82,7 +73,9 @@ const ajouterImg = document.getElementById("ajout-img-projet")
 const appercuImg = document.querySelector(".appercu")
 const changerImg = document.querySelector(".changer-img")
 
-export function modalAdd () {
+export async function modalAdd() {
+    // récupère les catégories depuis l'API pour générer le champ select
+    const categories = await fetchCategories()
     ajouterProj.addEventListener('click', function (e) {
         e.preventDefault()
         // remplace la modale galerie par la modale ajout
@@ -90,16 +83,25 @@ export function modalAdd () {
         modaleAjout.style.display = 'flex'
         afficheAjout.style.display = 'flex'
         afficheAppercu.style.display = 'none'
-        // génère le choix des catégories (à rendre dynamique depuis l'API plus tard) 
-        // première option vide et disabled 
-        catProjet.innerHTML = `<option value="" class="cat-option" disabled selected></option>
-        <option value="1" class="cat-option">Objets</option>
-        <option value="2" class="cat-option">Appartements</option>
-        <option value="3" class="cat-option">Hotels & restaurants</option>`
+        
+        // rempli le champ select avec les catégories récupérées sur l'API (+ une catégorie vide pour l'affichage au début)
+        catProjet.innerHTML = `<option value="" class="cat-option" disabled selected></option>`
+        categories.forEach(function (e) {
+            // génère une balise option
+            let option = document.createElement("option")
+            // rempli l'attribut value de la balise avec l'ID de la catégorie
+            option.value=e.id
+            // donne la class "cat-option" 
+            option.className="cat-option"
+            // rempli le texte par le nom de la catégorie
+            option.innerText=e.name
+            // rajoute la balise au cahmp select
+            catProjet.append(option)
+        }) 
+
+        // vide le champ titre
         titreProjet.value = ""
-    
-    
-    
+
         // affichage de l'appercu de la photo lors de l'ajout
         ajouterImg.addEventListener('change', () => {
             // cache l'input d'ajout et affiche l'image à la place
@@ -108,9 +110,9 @@ export function modalAdd () {
             // récupère l'URL pour afficher l'image
             appercuImg.src = URL.createObjectURL(ajouterImg.files[0])
             appercuImg.alt = ajouterImg.name
-    
+
         })
-    
+
         // Possibilité de changer de photo en cliquand sur le bouton
         changerImg.addEventListener('click', () => {
             // reset l'image pour un ajout ultérieur
@@ -120,10 +122,9 @@ export function modalAdd () {
             afficheAjout.style.display = 'flex'
             afficheAppercu.style.display = 'none'
         })
-    
+
     })
-    
-    
+
     // desactive le bouton valider tant que l'ensemble du formulaire n'est pas rempli
     const btnValider = document.getElementById("btn-valider")
     btnValider.disabled = true
@@ -135,7 +136,7 @@ export function modalAdd () {
             btnValider.disabled = false
         }
     })
-    
+
     // comportement du bouton Valider au click (récupère les infos et envoie la demande POST)
     btnValider.addEventListener('click', (e) => {
         e.preventDefault()
@@ -155,4 +156,21 @@ export function modalAdd () {
         modaleAjout.style.display = 'none'
     })
 
+        
+        // Retour à la modale galerie au click sur le bouton fleche
+        const back2 = document.getElementById("back2")
+        back2.addEventListener("click", (event) => {
+            event.preventDefault()
+            // réinitialise l'affichage des modales 
+            modaleGallery.style.display = 'flex'
+            modaleAjout.style.display = 'none'
+        })
+    
+        
+        // Ferme la modale au click sur le bouton X
+        const fermer = document.getElementById("close2")
+        fermer.addEventListener("click", (event) => {
+            event.preventDefault()
+            dialog.close()
+        })
 }

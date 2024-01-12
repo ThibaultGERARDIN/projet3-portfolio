@@ -5,6 +5,8 @@ import { createFigure } from "./modules/createfigure.js";
 import { createFiltres } from "./modules/createfiltres.js";
 import { modalGallery, modalAdd } from "./modules/gestionmodale.js";
 
+
+
 // récupère le token de login
 let token = window.sessionStorage.getItem('token');
 
@@ -25,6 +27,7 @@ createFigure(null, 'mini-gallery');
 
 // appel de la fonction qui gère les filtres
 createFiltres()
+
 
 // appel des fonctions qui gèrent la modale
 modalGallery()

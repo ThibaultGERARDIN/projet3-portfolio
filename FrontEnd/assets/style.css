@@ -358,7 +358,7 @@ dialog {
 	justify-content: space-between;
 }
 
-#close, #retour {
+.btn-nav {
 	height: 24px;
 	width: 24px;
 	border: none;
@@ -367,7 +367,7 @@ dialog {
 	box-sizing: border-box;
 }
 
-#close:hover, #retour:hover {
+.btn-nav:hover {
 	color: #B1663C;
 }
 
@@ -455,6 +455,15 @@ dialog {
 	box-sizing: border-box;
 }
 
+/* gère la position de la flèche en remplaçant celle de base  */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1.5rem center;
+    background-size: 1em;
+}
+
 .img-projet {
 	border-radius: 3px;
 	display: flex;
@@ -519,7 +528,7 @@ dialog {
 	display: none;
 	flex-direction: row;
 	justify-content: center;
-	gap: 10px;
+	gap: 20px;
 	align-items: center;
 }
 
@@ -539,6 +548,6 @@ dialog {
 	font-weight: 600;
 	background-color: #CBD6DC;
 	box-sizing: border-box;
-	margin-right: -100px;
+	margin-right: -130px;
 }
 
