@@ -1,11 +1,12 @@
 // récupère le token de login
 let token = window.sessionStorage.getItem('token');
 
-import { createFigure } from "./createfigure.js";
-
-
 //   fonction pour supprimer les projets de la base de donnée en fonction de l'id indiquée
 export async function deleteWorks(id) {
+
+    const figureGallery = document.querySelector(`.gallery figure[id="${id}"]`)
+    const figureModal = document.querySelector(`.mini-gallery figure[id="${id}"]`)
+
     const response = await fetch(`http://localhost:5678/api/works/${id}`, {
         method: 'DELETE',
         headers: {
@@ -16,9 +17,9 @@ export async function deleteWorks(id) {
     })
     if (response.ok) {
         console.log("Le projet a bien été supprimé")
-        // recréé les galeries sans le projet qui a été supprimé
-        createFigure(null, 'gallery')
-        createFigure(null, 'mini-gallery')
+        // supprime du dom les figures avec l'ID correspondant
+        figureGallery.remove()
+        figureModal.remove()
     } else {
         alert("Echec de suppression");
     }

@@ -5,57 +5,56 @@ import { fetchCategories } from "./fetchcategories.js"
 // Partie concernant la modale (ouverture et fermeture)
 
 const dialog = document.querySelector("dialog")
-const modif = document.getElementById("modif")
+export const modif = document.getElementById("modif")
 const modaleGallery = document.getElementById("modale-gallery")
 const modaleAjout = document.getElementById("modale-ajout")
 
 export function modalGallery() {
     // ouverture de la modale 
-    modif.addEventListener("click", (event) => {
-        event.preventDefault()
-        dialog.showModal()
-        // réinitialise l'affichage des modales 
-        modaleGallery.style.display = 'flex'
-        modaleAjout.style.display = 'none'
-        back.style.visibility = 'hidden'
 
-        // selection des boutons poubelle + appel fonction delete sur l'ID correspondant
-        const trash = document.querySelectorAll(".btn-trash")
-       
-        console.log(trash)
-        trash.forEach(function (e) {
-            e.addEventListener("click", () => {
-                // extrait l'Id du projet depuis l'Id du bouton trash
-                const delId = e.id.replace("trash", "")
-                // Demande de validation avant suppression de l'élément
-                let validation = confirm(`Êtes-vous sûr(e) de vouloir supprimer le projet ${delId} : ${e.alt}?`)
-                // procède à la suppression si validé
-                if (validation === true) {
-                    deleteWorks(delId)
-                }
-            })
+    dialog.showModal()
+    // réinitialise l'affichage des modales 
+    modaleGallery.style.display = 'flex'
+    modaleAjout.style.display = 'none'
+    back.style.visibility = 'hidden'
+
+    // selection des boutons poubelle + appel fonction delete sur l'ID correspondant
+    const trash = document.querySelectorAll(".btn-trash")
+    trash.forEach(function (e) {
+        e.addEventListener("click", () => {
+            // extrait l'Id du projet depuis l'Id du bouton trash
+            const delId = e.id.replace("trash", "")
+            // Demande de validation avant suppression de l'élément
+            let validation = confirm(`Êtes-vous sûr(e) de vouloir supprimer le projet ${delId} : ${e.alt}?`)
+            // procède à la suppression si validé
+            if (validation === true) {
+                deleteWorks(delId)
+            }
         })
     })
 
 
-    // ferme la modale si on clique en dehors
-    dialog.addEventListener('click', (event) => {
-        // récupère la classe de l'élément cliqué
-        const target = event.target.getAttribute("class")
-        // si l'élément cliqué n'a pas de class (donc en dehors de la modale) ferme la modale
-        if (target === null) {
-            dialog.close();
-        }
-    })
-
-
-    const fermer = document.getElementById("close")
-    // Ferme la modale au click sur le bouton X
-    fermer.addEventListener("click", (event) => {
-        event.preventDefault()
-        dialog.close()
-    })
 }
+
+
+// ferme la modale si on clique en dehors
+dialog.addEventListener('click', (event) => {
+    // récupère la classe de l'élément cliqué
+    const target = event.target.getAttribute("class")
+    // si l'élément cliqué n'a pas de class (donc en dehors de la modale) ferme la modale
+    if (target === null) {
+        dialog.close();
+    }
+})
+
+
+const fermer = document.getElementById("close")
+// Ferme la modale au click sur le bouton X
+fermer.addEventListener("click", (event) => {
+    event.preventDefault()
+    dialog.close()
+})
+
 
 
 
@@ -83,21 +82,21 @@ export async function modalAdd() {
         modaleAjout.style.display = 'flex'
         afficheAjout.style.display = 'flex'
         afficheAppercu.style.display = 'none'
-        
+
         // rempli le champ select avec les catégories récupérées sur l'API (+ une catégorie vide pour l'affichage au début)
         catProjet.innerHTML = `<option value="" class="cat-option" disabled selected></option>`
         categories.forEach(function (e) {
             // génère une balise option
             let option = document.createElement("option")
             // rempli l'attribut value de la balise avec l'ID de la catégorie
-            option.value=e.id
+            option.value = e.id
             // donne la class "cat-option" 
-            option.className="cat-option"
+            option.className = "cat-option"
             // rempli le texte par le nom de la catégorie
-            option.innerText=e.name
+            option.innerText = e.name
             // rajoute la balise au cahmp select
             catProjet.append(option)
-        }) 
+        })
 
         // vide le champ titre
         titreProjet.value = ""
@@ -156,21 +155,21 @@ export async function modalAdd() {
         modaleAjout.style.display = 'none'
     })
 
-        
-        // Retour à la modale galerie au click sur le bouton fleche
-        const back2 = document.getElementById("back2")
-        back2.addEventListener("click", (event) => {
-            event.preventDefault()
-            // réinitialise l'affichage des modales 
-            modaleGallery.style.display = 'flex'
-            modaleAjout.style.display = 'none'
-        })
-    
-        
-        // Ferme la modale au click sur le bouton X
-        const fermer = document.getElementById("close2")
-        fermer.addEventListener("click", (event) => {
-            event.preventDefault()
-            dialog.close()
-        })
+
+    // Retour à la modale galerie au click sur le bouton fleche
+    const back2 = document.getElementById("back2")
+    back2.addEventListener("click", (event) => {
+        event.preventDefault()
+        // réinitialise l'affichage des modales 
+        modaleGallery.style.display = 'flex'
+        modaleAjout.style.display = 'none'
+    })
+
+
+    // Ferme la modale au click sur le bouton X
+    const fermer = document.getElementById("close2")
+    fermer.addEventListener("click", (event) => {
+        event.preventDefault()
+        dialog.close()
+    })
 }
