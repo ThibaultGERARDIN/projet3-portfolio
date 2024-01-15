@@ -3,9 +3,7 @@
 import { checkConnected } from "./modules/checkconnected.js";
 import { createFigure } from "./modules/createfigure.js";
 import { createFiltres } from "./modules/createfiltres.js";
-import { modalGallery, modalAdd, modif } from "./modules/gestionmodale.js";
-import { deleteWorks } from "./modules/deleteworks.js";
-
+import { showmodalGallery, showmodalAdd } from "./modules/gestionmodale.js";
 
 // récupère le token de login
 let token = window.sessionStorage.getItem('token');
@@ -28,14 +26,10 @@ createFigure(null, 'mini-gallery');
 
 
 // appel de la fonction qui gère les filtres
-createFiltres()
+createFiltres();
 
 
-// appel des fonctions qui gèrent la modale
+// appel des fonctions qui gèrent la modal
 
-modalAdd()
-
-modif.addEventListener("click", (event) => {
-    event.preventDefault()
-    modalGallery()
-})
+showmodalAdd();
+showmodalGallery();

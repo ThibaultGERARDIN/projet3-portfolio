@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="./assets/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
 		integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-		crossorigin="anonymous" referrerpolicy="no-referrer" />
+		crossorigin="anonymous" referrerpolicy="no-referrer">
 	<script type="module" src="./assets/script.js"></script>
 
 </head>
@@ -38,47 +38,47 @@
 		</header>
 		<main>
 			<dialog>
-				<div class="modale" id="modale-gallery">
-					<nav class="nav-modale">
+				<div class="modal" id="modal-gallery">
+					<nav class="nav-modal">
 						<button id="back" class="btn-nav"><i class="fa-solid fa-arrow-left"></i></button>
 						<button id="close" class="btn-nav"><i class="fa-solid fa-xmark"></i></button>
 					</nav>
-					<h3 class="titre-modale">Galerie photo</h3>
+					<h3 class="title-modal">Galerie photo</h3>
 					<div class="mini-gallery">
 					</div>
-					<button id="btn-ajouter" class="btn-vert">Ajouter une photo</button>
+					<button id="btn-add" class="btn-vert">Ajouter une photo</button>
 				</div>
-				<div class="modale" id="modale-ajout">
-					<nav class="nav-modale">
+				<div class="modal" id="modal-add">
+					<nav class="nav-modal">
 						<button id="back2" class="btn-nav"><i class="fa-solid fa-arrow-left"></i></button>
 						<button id="close2" class="btn-nav"><i class="fa-solid fa-xmark"></i></button>
 					</nav>
-					<h3 class="titre-modale">Ajout photo</h3>
-					<form id="ajout-projet" class="ajout-projet">
-						<div class="img-projet">
-							<div class="affiche-ajout">
+					<h3 class="title-modal">Ajout photo</h3>
+					<form id="add-project" class="add-project">
+						<div class="img-project">
+							<div class="show-add">
 								<i class="fa-regular fa-image bigandgrey"></i>
-								<div class="ajout-img">
-								<button class="btn-img">
-									+ Ajouter photo
-								</button>
-								<input type="file" name="ajout-img-projet" id="ajout-img-projet"
-										class="ajout-img-projet" accept=".jpg,.png" required>
+								<div class="add-img">
+									<button class="btn-img">
+										+ Ajouter photo
+									</button>
+									<input type="file" name="add-img-project" id="add-img-project"
+										class="add-img-project" accept=".jpg,.png" required>
 								</div>
 								<p class="description">jpg, png : 4mo max</p>
 							</div>
-							<div class="affiche-appercu">
-								<img class="appercu">
+							<div class="show-appercu">
+								<img class="appercu" src="#" alt="">
 								<button class="changer-img">Changer d'image</button>
 							</div>
 						</div>
-						<label for="titre-projet" class="label-ajout">Titre</label>
-						<input type="text" name="titre-projet" id="titre-projet" class="titre-projet" required>
-						<label for="cat-projet" class="label-ajout">Catégorie</label>
-						<select id="cat-projet" name="cat-projet" class="cat-projet" required>
+						<label for="project-title" class="label-add">title</label>
+						<input type="text" name="project-title" id="project-title" class="project-title" required>
+						<label for="cat-project" class="label-add">Catégorie</label>
+						<select id="cat-project" name="cat-project" class="cat-project" required>
 						</select>
 					</form>
-					<button type="submit" form="ajout-projet" id="btn-valider" class="btn-vert">Valider</button>
+					<button type="submit" form="add-project" id="btn-valider" class="btn-vert">Valider</button>
 				</div>
 
 			</dialog>
@@ -98,7 +98,7 @@
 				</article>
 			</section>
 			<section id="portfolio">
-				<div class="projets">
+				<div class="projects">
 					<h2>Mes Projets</h2>
 					<a id="modif" href=""><i class="fa-regular fa-pen-to-square"></i> modifier</a>
 				</div>
@@ -114,7 +114,7 @@
 				<form action="#" method="post">
 					<label for="name">Nom</label>
 					<input type="text" name="name" id="name">
-					<label for="email">Email</label>
+					<label for="contact-email">Email</label>
 					<input type="email" name="email" id="contact-email">
 					<label for="message">Message</label>
 					<textarea name="message" id="message" cols="30" rows="10"></textarea>

@@ -14,11 +14,11 @@ export async function addWorks(formData) {
         body: formData
     })
     if (response.ok) {
-        console.log("Le projet a bien été ajouté")
+        console.log("Le projet a bien été ajouté");
         // recréé les galeries avec le projet qui a été ajouté
-        createFigure(null, 'gallery')
-        createFigure(null, 'mini-gallery')
+        createFigure(null, 'gallery');
+        createFigure(null, 'mini-gallery');
     } else {
-        alert("Echec de l'ajout")
+        alert("Echec de l'ajout");
     }
 }

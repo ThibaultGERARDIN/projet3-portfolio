@@ -2,11 +2,11 @@
 
 export function checkConnected(token) {
     // affiche les éléments du mode édition si le token est détecté
-if (token !== null) {
-    document.querySelector('.edition').style.display = 'flex';
-    document.querySelector('.filtres').style.display = 'none';
-    document.getElementById('logout-link').style.display = 'flex';
-    document.getElementById('login-link').style.display = 'none';
-    document.getElementById('modif').style.display = 'flex';
-} 
+    if (token !== null) {
+        document.querySelector('.edition').style.display = 'flex';
+        document.querySelector('.filtres').style.display = 'none';
+        document.getElementById('logout-link').style.display = 'flex';
+        document.getElementById('login-link').style.display = 'none';
+        document.getElementById('modif').style.display = 'flex';
+    }
 }

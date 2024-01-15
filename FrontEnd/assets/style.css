@@ -80,6 +80,7 @@ footer {
 	height: 60px;
 	padding: 10px 0px;
 }
+
 section {
 	margin: 50px 0
 }
@@ -314,7 +315,7 @@ h3 {
 	display : none;
 }
 
-.projets {
+.projects {
 	display : flex;
 	flex-direction: row;
 	gap: 30px;
@@ -346,13 +347,13 @@ dialog {
 	box-sizing: border-box;
 }
 
-.modale {
+.modal {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
 
-.nav-modale {
+.nav-modal {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -371,7 +372,7 @@ dialog {
 	color: #B1663C;
 }
 
-.titre-modale {
+.title-modal {
 	text-align: center;
 	font-size: 26px;
 	font-weight: 400;
@@ -428,11 +429,11 @@ dialog {
 	background-color: #A7A7A7;
 }
 
-#moddale-ajout {
+#modale-add {
 	display: none;
 }
 
-.ajout-projet {
+.add-project {
 	display: flex;
 	flex-direction: column;
 	width: 420px;
@@ -444,7 +445,7 @@ dialog {
 	color: #3D3D3D;
 }
 
-.titre-projet, .cat-projet {
+.project-title, .cat-project {
 	background-color: white;
 	height: 50px;
 	font-size: 1.2em;
@@ -455,8 +456,9 @@ dialog {
 	box-sizing: border-box;
 }
 
-/* gère la position de la flèche en remplaçant celle de base  */
+
 select {
+	/* modifie la position de la flèche du select en remplaçant celle de base  */
     appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
@@ -464,7 +466,7 @@ select {
     background-size: 1em;
 }
 
-.img-projet {
+.img-project {
 	border-radius: 3px;
 	display: flex;
 	flex-direction: column;
@@ -489,13 +491,13 @@ select {
 	background-color: #CBD6DC;
 }
 
-.ajout-img {
+.add-img {
 	position: relative;
 	width: 173px;
 	height: 36px;
 }
 
-.ajout-img input {
+.add-img input {
 	position: relative;
 	text-align: right;
 	width: 173px;
@@ -516,7 +518,7 @@ select {
 	font-weight: 400;
 }
 
-.affiche-ajout {
+.show-add {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -524,7 +526,7 @@ select {
 	gap: 8px;
 }
 
-.affiche-appercu {
+.show-appercu {
 	display: none;
 	flex-direction: row;
 	justify-content: center;
