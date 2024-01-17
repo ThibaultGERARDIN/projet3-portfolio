@@ -526,7 +526,7 @@ select {
 	gap: 8px;
 }
 
-.show-appercu {
+.show-preview {
 	display: none;
 	flex-direction: row;
 	justify-content: center;
@@ -534,11 +534,11 @@ select {
 	align-items: center;
 }
 
-.appercu {
+.preview {
 	height: 169px;
 	object-fit: contain;	
 }
-.changer-img {
+.change-img {
 	text-align: center;
 	height: 36px;
 	width: fit-content;

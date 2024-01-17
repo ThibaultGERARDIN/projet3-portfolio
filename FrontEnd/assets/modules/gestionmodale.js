@@ -49,10 +49,10 @@ const catproject = document.getElementById("cat-project");
 const formAdd = document.getElementById("add-project");
 const projectTitle = document.getElementById("project-title");
 const showAdd = document.querySelector(".show-add");
-const showAppercu = document.querySelector(".show-appercu");
+const showpreview = document.querySelector(".show-preview");
 const addImg = document.getElementById("add-img-project");
-const appercuImg = document.querySelector(".appercu");
-const changerImg = document.querySelector(".changer-img");
+const previewImg = document.querySelector(".preview");
+const changeImg = document.querySelector(".change-img");
 
 export async function showmodalAdd() {
     // récupère les catégories depuis l'API pour générer le champ select
@@ -63,7 +63,7 @@ export async function showmodalAdd() {
         modalGallery.style.display = 'none';
         modalAdd.style.display = 'flex';
         showAdd.style.display = 'flex';
-        showAppercu.style.display = 'none';
+        showpreview.style.display = 'none';
 
         // rempli le champ select avec les catégories récupérées sur l'API (+ une catégorie vide pour l'affichage au début)
         catproject.innerHTML = `<option value="" class="cat-option" disabled selected></option>`
@@ -83,25 +83,25 @@ export async function showmodalAdd() {
         // vide le champ title
         projectTitle.value = "";
 
-        // affichage de l'appercu de la photo lors de l'ajout
+        // affichage de l'preview de la photo lors de l'ajout
         addImg.addEventListener('change', () => {
             // cache l'input d'ajout et affiche l'image à la place
             showAdd.style.display = 'none';
-            showAppercu.style.display = 'flex';
+            showpreview.style.display = 'flex';
             // récupère l'URL pour afficher l'image
-            appercuImg.src = URL.createObjectURL(addImg.files[0]);
-            appercuImg.alt = addImg.name;
+            previewImg.src = URL.createObjectURL(addImg.files[0]);
+            previewImg.alt = addImg.name;
 
         })
 
         // Possibilité de changer de photo en cliquand sur le bouton
-        changerImg.addEventListener('click', () => {
+        changeImg.addEventListener('click', () => {
             // reset l'image pour un ajout ultérieur
-            appercuImg.src = "";
-            appercuImg.alt = "";
-            // cache la div d'affichage de l'appercu et affiche l'input pour ajouter image
+            previewImg.src = "";
+            previewImg.alt = "";
+            // cache la div d'affichage de l'preview et affiche l'input pour ajouter image
             showAdd.style.display = 'flex';
-            showAppercu.style.display = 'none';
+            showpreview.style.display = 'none';
         })
 
     })
