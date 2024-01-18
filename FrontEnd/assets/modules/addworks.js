@@ -16,8 +16,8 @@ export async function addWorks(formData) {
     if (response.ok) {
         console.log("Le projet a bien été ajouté");
         // recréé les galeries avec le projet qui a été ajouté
-        createFigure(null, 'gallery');
-        createFigure(null, 'mini-gallery');
+        createFigure(0, 'gallery');
+        createFigure(0, 'mini-gallery');
     } else {
         alert("Echec de l'ajout");
     }

@@ -41,7 +41,6 @@ export function showmodalGallery() {
 
 }
 
-
 //  Changement de contenu de la modal pour afficher le formulaire d'ajout
 
 const addProj = document.getElementById("btn-add");

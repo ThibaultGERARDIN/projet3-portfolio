@@ -17,31 +17,19 @@ export async function createFiltres() {
         // place le bouton dans le DOM dans la div filtres
         document.querySelector('.filtres').append(btnFiltre);
     }
-    // Utilisation du filtre Objets pour retourner les travaux avec la catégorie Objets uniquement
-    const boutonObjets = document.getElementById("btn1");
 
-    boutonObjets.addEventListener("click", function () {
-        createFigure(1, 'gallery');
+    // récupère les boutons créés juste au dessus
+    const btnFiltres = document.querySelectorAll(".btn-filtres")
+    // Ajoute un eventlistener sur chaque bouton qui permet le tri par catégorie en recréant la gallerie
+    btnFiltres.forEach(function (e) {
+        e.addEventListener("click", () => {
+            // extrait l'Id de la catégorie depuis l'Id du bouton filtre
+            let catId = e.id.replace("btn", "");
+            // transforme l'Id récupérée en number
+            catId = Number(catId);
+            // appelle la fonction qui génère la gallerie avec uniquement la catégorie selectionnée
+            createFigure(catId, 'gallery');
+        })
     })
-
-    // Utilisation du filtre Appartements pour retourner les travaux avec la catégorie Appartements uniquement
-    const boutonAppartements = document.getElementById("btn2");
-
-    boutonAppartements.addEventListener("click", function () {
-        createFigure(2, 'gallery');
-    })
-
-    // Utilisation du filtre Hotels et restaurants pour retourner les travaux avec la catégorie Hotels et restaurants uniquement
-    const boutonHotelsetresto = document.getElementById("btn3");
-
-    boutonHotelsetresto.addEventListener("click", function () {
-        createFigure(3, 'gallery');
-    })
-    // Filtre tous pour reset
-    const boutonTous = document.getElementById("tous");
-
-    boutonTous.addEventListener("click", function () {
-        createFigure(null, 'gallery');
-    })
-}
+ }
 

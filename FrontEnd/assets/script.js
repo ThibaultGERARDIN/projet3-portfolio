@@ -20,8 +20,8 @@ logout.addEventListener('click', function () {
 })
 
 // appel de la fonction pour remplir les galeries
-createFigure(null, 'gallery');
-createFigure(null, 'mini-gallery');
+createFigure(0, 'gallery');
+createFigure(0, 'mini-gallery');
 
 
 

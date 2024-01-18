@@ -7,8 +7,8 @@ export async function createFigure(catId, lieu) {
     // récupère les projets sur l'API et les stocke dans une variable
     const getWorks = await fetchWorks();
     let works;
-    // selectionne les projets à faire apparaitre en fonction de la catégorie selectionnée (null si tout)
-    if (catId !== null) {
+    // selectionne les projets à faire apparaitre en fonction de la catégorie selectionnée (0 si tout)
+    if (catId !== 0) {
         works = getWorks.filter(function (getWorks) {
             return getWorks.category.id === catId;
         })
