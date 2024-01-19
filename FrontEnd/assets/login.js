@@ -49,7 +49,7 @@ submit.addEventListener("click", (event) => {
   if (email === "sophie.bluel@test.tld" && mdp === "S0phie") {
     login(email, mdp);
   } else {
-    alert("Utilisateur non reconnu");
+    alert("Erreur dans l'identifiant ou le mot de passe");
   }
 
 })
